@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>클래스 둘러보기</title>
+<style>
+:root{
+  --primary:#3978B6; --primary-dark:#2F679D; --soft:#EEF5FC;
+  --text:#171717; --muted:#707070; --border:#D8D8D8;
+  --bg:#fff; --chip:#fff; --danger:#E85D2A;
+}
+*{box-sizing:border-box}
+body{margin:0;background:#f2f3f5;font-family:Arial,"Noto Sans KR",sans-serif;color:var(--text)}
+button{font:inherit}
+.app{
+  width:min(100%,386px); min-height:100vh; margin:0 auto; background:var(--bg);
+  position:relative; overflow:hidden; box-shadow:0 0 0 1px #ddd;
+}
+.status{height:29px;padding:7px 10px 0;font-size:10px;color:#555;display:flex;justify-content:space-between}
+.header{height:54px;padding:13px 18px 9px;display:flex;align-items:center;border-top:1px solid #eee}
+.back{font-size:21px;margin-right:8px}.title{font-size:20px;font-weight:700;flex:1}
+.search{width:38px;height:34px;border:1px solid #cfcfcf;background:#fff;border-radius:5px;font-size:18px}
+.tabs{display:flex;gap:24px;height:38px;padding:0 22px;border-bottom:1px solid var(--border);align-items:flex-start}
+.tab{font-size:13px;color:#777;height:38px;padding:4px 0;background:none;border:0;position:relative}
+.tab.active{color:var(--primary);font-weight:700}.tab.active:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--primary)}
+.quick{display:flex;gap:6px;padding:10px 21px 12px;overflow:auto;white-space:nowrap}
+.chip{height:28px;padding:0 11px;border:1px solid #9eb2c4;border-radius:6px;background:#fff;color:#333;font-size:12px}
+.chip.selected{background:var(--soft);border-color:#6f9bc0;color:#245d8d}
+.content{padding:0 20px 300px}
+.card{padding:0 0 10px;margin-bottom:10px;border-bottom:1px solid #ddd}
+.photo{height:110px;background:repeating-conic-gradient(#eee 0 25%,#f7f7f7 0 50%) 50%/20px 20px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:12px}
+.photo.real{background:linear-gradient(135deg,#e9d2b5,#f4f1e9 45%,#d9e5c8); overflow: hidden;}
+.meta{font-size:12px;color:var(--primary);margin-top:8px}
+.card h2{font-size:16px;line-height:1.35;margin:3px 0;font-weight:700}
+.sub{font-size:11px;color:#777;margin-bottom:5px}
+.price-row{display:flex;align-items:center;justify-content:space-between}
+.price{font-size:16px;font-weight:700}.status-badge{font-size:11px;color:var(--primary);border:1px solid #8eb2d3;padding:5px 8px;background:#fff}
+.status-badge.hot{background:var(--danger);border-color:var(--danger);color:#fff}
+.sheet{
+  position:absolute;left:0;right:0;bottom:0;background:#f5f8fe;
+  border-radius:16px 16px 0 0;box-shadow:0 -8px 22px rgba(0,0,0,.13);
+  padding:15px 20px 10px; z-index:3;
+}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.sheet-title{font-size:16px;font-weight:700;color:var(--primary)}
+.reset{font-size:12px;color:#777;background:none;border:0}
+.label{font-size:11px;margin:7px 0 6px;color:#444}
+.row{display:flex;gap:7px}
+.smallchip{height:28px;min-width:34px;padding:0 9px;border:1px solid #c5cbd2;border-radius:6px;background:#fff;font-size:11px}
+.smallchip.selected{background:var(--primary);border-color:var(--primary);color:#fff}
+.range-wrap{position:relative;height:35px}
+.range-line{position:absolute;left:18px;right:12px;top:17px;height:2px;background:#aaa}
+.range-dot{position:absolute;left:24%;top:11px;width:12px;height:12px;border-radius:50%;background:#66727c}
+.range-labels{display:flex;justify-content:space-between;font-size:10px;color:#777}
+.actions{display:flex;gap:12px;margin-top:8px}
+.action{height:48px;border-radius:6px;border:1px solid #d2dbea;background:#e9eef8;font-size:15px;font-weight:700;flex:1}
+.action.primary{background:var(--primary);border-color:var(--primary);color:#fff;flex:1.55}
+img{
+  width: 500px;
+  height: 200px;
+  overflow: hidden;
+}
+@media(min-width:600px){body{padding:24px 0}.app{min-height:895px}}
+</style>
+</head>
+<body>
+<main class="app">
+  <div class="status"><span>09:00</span><span>▰</span></div>
+  <header class="header">
+    <span class="back">←</span><span class="title">클래스 둘러보기</span>
+    <button class="search" aria-label="클래스 검색">⌕</button>
+  </header>
+
+  <nav class="tabs" aria-label="카테고리">
+    <button class="tab active">전체</button><button class="tab">공예</button><button class="tab">요리</button>
+    <button class="tab">운동</button><button class="tab">디지털</button><button class="tab">원예</button>
+  </nav>
+
+  <div class="quick" aria-label="빠른 필터">
+    <button class="chip selected">주말</button><button class="chip">오전</button>
+    <button class="chip">3만원 이하</button><button class="chip">1km 내</button><button class="chip">모집중</button>
+  </div>
+
+  <section class="content" aria-label="클래스 목록">
+    <article class="card">
+      <div class="photo real"  role="jam.jpg" aria-label="스콘과 잼을 만드는 베이킹 클래스 대표 사진"><img src = "jam.jpg"></div>
+      <div class="meta">요리</div>
+      <h2>주말 홈베이킹 · 스콘과 잼</h2>
+      <div class="sub">망원동 쿠킹랩 · 토 10:00 · 2회차</div>
+      <div class="price-row"><span class="price">38,000원</span><span class="status-badge hot">마감임박 2석</span></div>
+    </article>
+
+    <article class="card">
+      <div class="photo real" role="img" aria-label="텃밭 상자 만들기 클래스 대표 사진"><img src="garden.jpg"></div>
+      <div class="meta">요리</div>
+      <h2>텃밭 상자 만들기</h2>
+      <div class="sub">연남 하늘 · 일 14:00 · 1회차</div>
+    </article>
+  </section>
+
+  <aside class="sheet" aria-label="필터">
+    <div class="sheet-head"><span class="sheet-title">필터 (바텀시트)</span><button class="reset">초기화</button></div>
+    <div class="label">요일</div>
+    <div class="row">
+      <button class="smallchip">월</button><button class="smallchip">화</button><button class="smallchip">수</button>
+      <button class="smallchip">목</button><button class="smallchip">금</button><button class="smallchip selected">토</button><button class="smallchip selected">일</button>
+    </div>
+    <div class="label">시간대</div>
+    <div class="row"><button class="smallchip">오전</button><button class="smallchip">오후</button><button class="smallchip">저녁</button></div>
+    <div class="label">수강료</div>
+    <div class="range-wrap">
+      <span class="range-labels"><span>무료</span><span>5만원</span></span>
+      <div class="range-line"></div><div class="range-dot"></div>
+    </div>
+    <div class="actions">
+      <button class="action">지도로 보기</button>
+      <button class="action primary">결과 32개 보기</button>
+    </div>
+  </aside>
+</main>
+<script>
+document.querySelectorAll('.chip,.smallchip,.tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(btn.classList.contains('tab')){
+      document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      btn.classList.add('active');
+    }else{
+      btn.classList.toggle('selected');
+    }
+  });
+});
+document.querySelector('.reset').onclick=()=>{
+  document.querySelectorAll('.smallchip.selected').forEach(x=>x.classList.remove('selected'));
+};
+document.querySelector('.search').onclick=()=>alert('검색 UI를 연결할 수 있습니다.');
+</script>
+</body>
+</html>
